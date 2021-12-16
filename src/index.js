@@ -491,8 +491,14 @@ export default class CanvasDraw extends PureComponent {
     // TODO use a generator
     let curTime = 0;
     let timeoutGap = immediate ? 0 : this.props.loadTimeOffset;
+    let lastline = lines[lines.length - 1];
 
     lines.forEach((line) => {
+      if (line === lastline) {
+        immediate = false;
+      } else {
+        immediate = true;
+      }
       const { points, brushColor, brushRadius } = line;
 
       // Draw all at once if immediate flag is set, instead of using setTimeout
